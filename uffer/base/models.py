@@ -25,3 +25,8 @@ class Veiculo(models.Model):
     motorista_id = models.ForeignKey(to=Motorista, on_delete=models.CASCADE)
 
 
+class Favorito(models.Model):
+    nome = models.CharField(max_length=256)
+    veiculo_id = models.ForeignKey(to=Veiculo, related_name="favoritos", on_delete=models.CASCADE)
+    usuario_id = models.ForeignKey(to=Usuario, related_name="favoritos", on_delete=models.CASCADE)
+
