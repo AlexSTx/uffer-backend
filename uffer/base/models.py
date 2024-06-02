@@ -32,8 +32,8 @@ class Local(models.Model):
 
 class Favorito(models.Model):
     nome = models.CharField(max_length=256)
-    local_id = models.ForeignKey(to=Local, related_name="favoritos", on_delete=models.CASCADE)
-    usuario_id = models.ForeignKey(to=Usuario, related_name="favoritos", on_delete=models.CASCADE)
+    local_id = models.ForeignKey(to=Local, on_delete=models.CASCADE)
+    usuario_id = models.ForeignKey(to=Usuario, on_delete=models.CASCADE)
 
 
 class LocalPadrao(models.Model):
@@ -42,8 +42,8 @@ class LocalPadrao(models.Model):
 
 
 class Trajeto(models.Model):
-    origem_id = models.ForeignKey(to=Local, on_delete=models.CASCADE)
-    destino_id = models.ForeignKey(to=Local, on_delete=models.CASCADE)
+    origem_id = models.ForeignKey(to=Local, related_name='origens', on_delete=models.CASCADE)
+    destino_id = models.ForeignKey(to=Local, related_name='destinos', on_delete=models.CASCADE)
 
 class Parada(models.Model):
     posicao = models.SmallIntegerField()
@@ -58,8 +58,8 @@ class Carona(models.Model):
     retorno = models.BooleanField(default=False)
     apenas_solicitacao = models.BooleanField(default=False)
     detalhes_adicionais = models.TextField(max_length=512)
-    motorista_id = models.ForeignKey(to=Motorista, on_delete=models.SET_NULL)
-    trajeto_id = models.ForeignKey(to=Trajeto, on_delete=models.SET_NULL)
+    motorista_id = models.ForeignKey(to=Motorista, null=True, on_delete=models.SET_NULL)
+    trajeto_id = models.ForeignKey(to=Trajeto, null=True, on_delete=models.SET_NULL)
 
 
 class Passageiro(models.Model):
