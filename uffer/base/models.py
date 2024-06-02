@@ -13,7 +13,7 @@ class Usuario(models.Model):
 
 class Motorista(models.Model):
     cnh = models.BigIntegerField(unique=True)
-    usuario_id = models.OneToOneField(to=Usuario, on_delete=models.DO_NOTHING)
+    usuario_id = models.OneToOneField(to=Usuario, on_delete=models.CASCADE)
 
 
 class Veiculo(models.Model):
@@ -30,3 +30,7 @@ class Favorito(models.Model):
     veiculo_id = models.ForeignKey(to=Veiculo, related_name="favoritos", on_delete=models.CASCADE)
     usuario_id = models.ForeignKey(to=Usuario, related_name="favoritos", on_delete=models.CASCADE)
 
+
+class Passageiro(models.Model):
+    carona_id = models.ForeignKey(to=Carona, on_delete=models.CASCADE)
+    passageiro_id = models.ForeignKey(to=Usuario, on_delete=models.CASCADE)
