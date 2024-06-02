@@ -31,6 +31,24 @@ class Favorito(models.Model):
     usuario_id = models.ForeignKey(to=Usuario, related_name="favoritos", on_delete=models.CASCADE)
 
 
+class Trajeto(models.Model):
+    origem_id = models.ForeignKey(to=Local, on_delete=models.CASCADE)
+    destino_id = models.ForeignKey(to=Local, on_delete=models.CASCADE)
+
+
+class Carona(models.Model):
+    data_hora_chegada = models.DateTimeField
+    data_hora_saida = models.DateTimeField
+    assentos_disponveis = models.IntegerField(default=1)
+    em_aberto = models.BooleanField(default=True)
+    retorno = models.BooleanField(default=False)
+    apenas_solicitacao = models.BooleanField(default=False)
+    detalhes_adicionais = models.TextField
+    motorista_id = models.ForeignKey(to=Motorista, on_delete=models.CASCADE)
+    trajeto_id = models.ForeignKey(to=Trajeto, on_delete=models.CASCADE)
+
+
 class Passageiro(models.Model):
     carona_id = models.ForeignKey(to=Carona, on_delete=models.CASCADE)
     passageiro_id = models.ForeignKey(to=Usuario, on_delete=models.CASCADE)
+
