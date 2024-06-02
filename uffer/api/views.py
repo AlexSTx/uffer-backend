@@ -53,7 +53,7 @@ class FavoritoDetail(generics.RetrieveDestroyAPIView):
     serializer_class = FavoritoSerializer
 
 
-class LocaisPadraosList(generics.ListCreateAPIView):
+class LocaisPadraoList(generics.ListCreateAPIView):
     queryset = LocalPadrao
     serializer_class = LocalPadraoSerializer
 
