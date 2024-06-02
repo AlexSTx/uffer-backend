@@ -8,7 +8,8 @@ class Usuario(models.Model):
     nome = models.CharField(max_length=256, validators=[validate_slug])
     email = models.CharField(max_length=320, validators=[validate_email])
     created = models.DateTimeField(auto_now_add=True)
-    foto = models.ImageField
+    # TODO: implementar foto, é mais complicado que só deixar aqui
+    # foto = models.ImageField()
 
 
 class Motorista(models.Model):
@@ -25,37 +26,40 @@ class Veiculo(models.Model):
     motorista_id = models.ForeignKey(to=Motorista, on_delete=models.CASCADE)
 
 
-class Favorito(models.Model):
-    nome = models.CharField(max_length=256)
-    veiculo_id = models.ForeignKey(to=Veiculo, related_name="favoritos", on_delete=models.CASCADE)
-    usuario_id = models.ForeignKey(to=Usuario, related_name="favoritos", on_delete=models.CASCADE)
-
-
 class Local(models.Model):
-    favorito_id = models.ForeignKey(to=Favorito, on_delete=models.CASCADE)
-    parada_id = models.ForeignKey(to=Parada, on_delete=models.CASCADE)
     coordenadas = models.CharField(max_length=256)
 
 
-class LocalPadrao(models.Model):
+class Favorito(models.Model):
     nome = models.CharField(max_length=256)
+    local_id = models.ForeignKey(to=Local, related_name="favoritos", on_delete=models.CASCADE)
+    usuario_id = models.ForeignKey(to=Usuario, related_name="favoritos", on_delete=models.CASCADE)
+
+
+class LocalPadrao(models.Model):
+    nome = models.CharField(max_length=256, unique=True)
     local_id = models.ForeignKey(to=Local, on_delete=models.CASCADE)
+
 
 class Trajeto(models.Model):
     origem_id = models.ForeignKey(to=Local, on_delete=models.CASCADE)
     destino_id = models.ForeignKey(to=Local, on_delete=models.CASCADE)
 
+class Parada(models.Model):
+    posicao = models.SmallIntegerField()
+    trajeto_id = models.ForeignKey(to=Trajeto, on_delete=models.CASCADE)
+    local_id = models.ForeignKey(to=Local, on_delete=models.CASCADE)
 
 class Carona(models.Model):
-    data_hora_chegada = models.DateTimeField
-    data_hora_saida = models.DateTimeField
+    data_hora_chegada = models.DateTimeField()
+    data_hora_saida = models.DateTimeField()
     assentos_disponveis = models.IntegerField(default=1)
     em_aberto = models.BooleanField(default=True)
     retorno = models.BooleanField(default=False)
     apenas_solicitacao = models.BooleanField(default=False)
-    detalhes_adicionais = models.TextField
-    motorista_id = models.ForeignKey(to=Motorista, on_delete=models.CASCADE)
-    trajeto_id = models.ForeignKey(to=Trajeto, on_delete=models.CASCADE)
+    detalhes_adicionais = models.TextField(max_length=512)
+    motorista_id = models.ForeignKey(to=Motorista, on_delete=models.SET_NULL)
+    trajeto_id = models.ForeignKey(to=Trajeto, on_delete=models.SET_NULL)
 
 
 class Passageiro(models.Model):
