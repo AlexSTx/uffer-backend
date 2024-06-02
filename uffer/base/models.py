@@ -50,5 +50,5 @@ class Carona(models.Model):
 
 class Passageiro(models.Model):
     carona_id = models.ForeignKey(to=Carona, on_delete=models.CASCADE)
-    passageiro_id = models.ForeignKey(to=Usuario, on_delete=models.CASCADE)
+    usuario_id = models.ForeignKey(to=Usuario, on_delete=models.CASCADE)
 
