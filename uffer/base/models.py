@@ -31,6 +31,16 @@ class Favorito(models.Model):
     usuario_id = models.ForeignKey(to=Usuario, related_name="favoritos", on_delete=models.CASCADE)
 
 
+class Local(models.Model):
+    favorito_id = models.ForeignKey(to=Favorito, on_delete=models.CASCADE)
+    parada_id = models.ForeignKey(to=Parada, on_delete=models.CASCADE)
+    coordenadas = models.CharField(max_length=256)
+
+
+class LocalPadrao(models.Model):
+    nome = models.CharField(max_length=256)
+    local_id = models.ForeignKey(to=Local, on_delete=models.CASCADE)
+
 class Trajeto(models.Model):
     origem_id = models.ForeignKey(to=Local, on_delete=models.CASCADE)
     destino_id = models.ForeignKey(to=Local, on_delete=models.CASCADE)
@@ -51,4 +61,3 @@ class Carona(models.Model):
 class Passageiro(models.Model):
     carona_id = models.ForeignKey(to=Carona, on_delete=models.CASCADE)
     usuario_id = models.ForeignKey(to=Usuario, on_delete=models.CASCADE)
-
