@@ -1,8 +1,10 @@
 from base.models import Usuario, Motorista, Veiculo, Local, Favorito, LocalPadrao, Trajeto, Parada, Carona, Passageiro
-from .serializers import UsuarioSerializer, MotoristaSerializer, VeiculoSerializer, LocalSerializer, FavoritoSerializer, LocalPadraoSerializer, TrajetoSerializer, ParadaSerializer, CaronaSerializer, PassageiroSerializer
+from .serializers import UsuarioSerializer, MotoristaSerializer, VeiculoSerializer, LocalSerializer, FavoritoSerializer, LocalPadraoSerializer, TrajetoSerializer, ParadaSerializer, CaronaSerializer, PassageiroSerializer, TrajetoCompletoSerializer
 
 
-from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import generics, mixins, status
 
 class UsuariosList(generics.ListCreateAPIView):
     queryset = Usuario.objects.all()
@@ -14,7 +16,7 @@ class UsuarioDetail(generics.RetrieveDestroyAPIView):
 
 
 class MotoristasList(generics.ListCreateAPIView):
-    queryset = Motorista
+    queryset = Motorista.objects.all()
     serializer_class = MotoristaSerializer
 
 
@@ -24,7 +26,7 @@ class MotoristaDetail(generics.RetrieveDestroyAPIView):
 
 
 class VeiculosList(generics.ListCreateAPIView):
-    queryset = Veiculo
+    queryset = Veiculo.objects.all()
     serializer_class = VeiculoSerializer
 
 
@@ -34,7 +36,7 @@ class VeiculoDetail(generics.RetrieveDestroyAPIView):
 
 
 class LocaisList(generics.ListCreateAPIView):
-    queryset = Local
+    queryset = Local.objects.all()
     serializer_class = LocalSerializer
 
 
@@ -44,7 +46,7 @@ class LocalDetail(generics.RetrieveDestroyAPIView):
 
 
 class FavoritosList(generics.ListCreateAPIView):
-    queryset = Favorito
+    queryset = Favorito.objects.all()
     serializer_class = FavoritoSerializer
 
 
@@ -54,7 +56,7 @@ class FavoritoDetail(generics.RetrieveDestroyAPIView):
 
 
 class LocaisPadraoList(generics.ListCreateAPIView):
-    queryset = LocalPadrao
+    queryset = LocalPadrao.objects.all()
     serializer_class = LocalPadraoSerializer
 
 
@@ -64,7 +66,7 @@ class LocalPadraoDetail(generics.RetrieveDestroyAPIView):
 
 
 class TrajetosList(generics.ListCreateAPIView):
-    queryset = Trajeto
+    queryset = Trajeto.objects.all()
     serializer_class = TrajetoSerializer
 
 
@@ -74,7 +76,7 @@ class TrajetoDetail(generics.RetrieveDestroyAPIView):
 
 
 class ParadasList(generics.ListCreateAPIView):
-    queryset = Parada
+    queryset = Parada.objects.all()
     serializer_class = ParadaSerializer
 
 
@@ -84,7 +86,7 @@ class ParadaDetail(generics.RetrieveDestroyAPIView):
 
 
 class CaronasList(generics.ListCreateAPIView):
-    queryset = Carona
+    queryset = Carona.objects.all()
     serializer_class = CaronaSerializer
 
 
@@ -94,7 +96,7 @@ class CaronaDetail(generics.RetrieveDestroyAPIView):
 
 
 class PassageirosList(generics.ListCreateAPIView):
-    queryset = Passageiro
+    queryset = Passageiro.objects.all()
     serializer_class = PassageiroSerializer
 
 
