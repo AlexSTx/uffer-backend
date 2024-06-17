@@ -1,10 +1,12 @@
 from base.models import Usuario, Motorista, Veiculo, Local, Favorito, LocalPadrao, Trajeto, Parada, Carona, Passageiro
-from .serializers import UsuarioSerializer, MotoristaSerializer, VeiculoSerializer, LocalSerializer, FavoritoSerializer, LocalPadraoSerializer, TrajetoSerializer, ParadaSerializer, CaronaSerializer, PassageiroSerializer, TrajetoCompletoSerializer
+from .serializers import UsuarioSerializer, MotoristaSerializer, VeiculoSerializer, LocalSerializer, FavoritoSerializer, LocalPadraoSerializer, TrajetoSerializer, ParadaSerializer, CaronaSerializer, PassageiroSerializer
 
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics, mixins, status
+from rest_framework.schemas import AutoSchema
+
 
 class UsuariosList(generics.ListCreateAPIView):
     queryset = Usuario.objects.all()
@@ -66,7 +68,7 @@ class LocalPadraoDetail(generics.RetrieveDestroyAPIView):
 
 
 class TrajetosList(generics.ListCreateAPIView):
-    queryset = Trajeto.objects.all()
+    queryset = Trajeto.objects.all().prefetch_related()
     serializer_class = TrajetoSerializer
 
 

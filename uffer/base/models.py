@@ -27,6 +27,7 @@ class Veiculo(models.Model):
 
 
 class Local(models.Model):
+    # TODO: change these coordinate fields
     coordenadas = models.CharField(max_length=256)
 
 
@@ -42,13 +43,15 @@ class LocalPadrao(models.Model):
 
 
 class Trajeto(models.Model):
-    origem_id = models.ForeignKey(to=Local, related_name='origens', on_delete=models.CASCADE)
-    destino_id = models.ForeignKey(to=Local, related_name='destinos', on_delete=models.CASCADE)
+    origem = models.ForeignKey(to=Local, related_name='origens', on_delete=models.CASCADE)
+    destino = models.ForeignKey(to=Local, related_name='destinos', on_delete=models.CASCADE)
+
 
 class Parada(models.Model):
     posicao = models.SmallIntegerField()
-    trajeto_id = models.ForeignKey(to=Trajeto, on_delete=models.CASCADE)
-    local_id = models.ForeignKey(to=Local, on_delete=models.CASCADE)
+    trajeto = models.ForeignKey(to=Trajeto, related_name='paradas', on_delete=models.CASCADE)
+    local = models.ForeignKey(to=Local, on_delete=models.CASCADE)
+
 
 class Carona(models.Model):
     data_hora_chegada = models.DateTimeField()
@@ -63,5 +66,5 @@ class Carona(models.Model):
 
 
 class Passageiro(models.Model):
-    carona_id = models.ForeignKey(to=Carona, on_delete=models.CASCADE)
-    usuario_id = models.ForeignKey(to=Usuario, on_delete=models.CASCADE)
+    carona = models.ForeignKey(to=Carona, on_delete=models.CASCADE)
+    usuario = models.ForeignKey(to=Usuario, on_delete=models.CASCADE)

@@ -31,20 +31,23 @@ class LocalPadraoSerializer(serializers.ModelSerializer):
         model = LocalPadrao
         fields = '__all__'
 
-class TrajetoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Trajeto
-        fields = '__all__'
-
 class ParadaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Parada
         fields = '__all__'
 
+class TrajetoSerializer(serializers.ModelSerializer):
+    paradas = ParadaSerializer(many = True, read_only = False)
+    class Meta:
+        model = Trajeto
+        fields = ['origem', 'destino', 'paradas']
+
+
 class CaronaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Carona
         fields = '__all__'
+
 
 class PassageiroSerializer(serializers.ModelSerializer):
     class Meta:
