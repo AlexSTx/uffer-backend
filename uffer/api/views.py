@@ -1,5 +1,5 @@
-from base.models import Usuario, Motorista, Veiculo, Local, Favorito, LocalPadrao, Trajeto, Parada, Carona, Passageiro
-from .serializers import UsuarioSerializer, MotoristaSerializer, VeiculoSerializer, LocalSerializer, FavoritoSerializer, LocalPadraoSerializer, TrajetoSerializer, ParadaSerializer, CaronaSerializer, PassageiroSerializer
+from base.models import Usuario, Motorista, Veiculo, Local, Favorito, LocalPadrao, Trajeto, Parada, Carona, Passageiro, SolicitacaoCarona
+from .serializers import UsuarioSerializer, MotoristaSerializer, VeiculoSerializer, LocalSerializer, FavoritoSerializer, LocalPadraoSerializer, TrajetoSerializer, ParadaSerializer, ParadaStandaloneSerializer, CaronaSerializer, PassageiroSerializer, SolicitacaoCaronaSerializer
 
 
 from rest_framework.views import APIView
@@ -79,12 +79,12 @@ class TrajetoDetail(generics.RetrieveDestroyAPIView):
 
 class ParadasList(generics.ListCreateAPIView):
     queryset = Parada.objects.all()
-    serializer_class = ParadaSerializer
+    serializer_class = ParadaStandaloneSerializer
 
 
 class ParadaDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Parada.objects.all()
-    serializer_class = ParadaSerializer
+    serializer_class = ParadaStandaloneSerializer
 
 
 class CaronasList(generics.ListCreateAPIView):
@@ -105,3 +105,4 @@ class PassageirosList(generics.ListCreateAPIView):
 class PassageiroDetail(generics.RetrieveDestroyAPIView):
     queryset = Passageiro.objects.all()
     serializer_class = PassageiroSerializer
+

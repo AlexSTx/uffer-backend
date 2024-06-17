@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from base.models import Usuario, Motorista, Veiculo, Local, Favorito, LocalPadrao, Trajeto, Parada, Carona, Passageiro
+from base.models import Usuario, Motorista, Veiculo, Local, Favorito, LocalPadrao, Trajeto, Parada, Carona, Passageiro, SolicitacaoCarona
 
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,17 +31,29 @@ class LocalPadraoSerializer(serializers.ModelSerializer):
         model = LocalPadrao
         fields = '__all__'
 
+class ParadaStandaloneSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Parada
+        fields = ['id', 'trajeto', 'posicao', 'local']
+
 class ParadaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Parada
-        fields = '__all__'
+        fields = ['id', 'posicao', 'local']
 
 class TrajetoSerializer(serializers.ModelSerializer):
-    paradas = ParadaSerializer(many = True, read_only = False)
+    paradas = ParadaSerializer(many = True)
     class Meta:
         model = Trajeto
-        fields = ['origem', 'destino', 'paradas']
-
+        fields = ['id', 'origem', 'destino', 'paradas']
+    
+    def create(self, validated_data):
+        paradas_data = validated_data.pop('paradas')
+        trajeto = Trajeto.objects.create(**validated_data)
+        for parada_data in paradas_data:
+            Parada.objects.create(trajeto = trajeto, **parada_data)
+            print(trajeto)
+        return trajeto
 
 class CaronaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -53,3 +65,4 @@ class PassageiroSerializer(serializers.ModelSerializer):
     class Meta:
         model = Passageiro
         fields = '__all__'
+
