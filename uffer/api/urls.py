@@ -31,4 +31,7 @@ urlpatterns = [
 
     path('passageiros/', views.PassageirosList.as_view()),
     path('passageiros/<int:pk>/', views.PassageiroDetail.as_view()),
+
+    path('solicitacoes_carona/', views.SolicitacoesCaronaList.as_view()),
+    path('solicitacoes_carona/<int:pk>/', views.SolicitacaoCaronaDetail.as_view()),
 ]

@@ -106,3 +106,12 @@ class PassageiroDetail(generics.RetrieveDestroyAPIView):
     queryset = Passageiro.objects.all()
     serializer_class = PassageiroSerializer
 
+
+class SolicitacoesCaronaList(generics.ListCreateAPIView):
+    queryset = SolicitacaoCarona.objects.all()
+    serializer_class = SolicitacaoCaronaSerializer
+
+
+class SolicitacaoCaronaDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = SolicitacaoCarona.objects.all()
+    serializer_class = SolicitacaoCaronaSerializer

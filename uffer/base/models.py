@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import validate_email, validate_slug
+from datetime import date
 
 
 # Create your models here.
@@ -68,3 +69,10 @@ class Carona(models.Model):
 class Passageiro(models.Model):
     carona = models.ForeignKey(to=Carona, on_delete=models.CASCADE)
     usuario = models.ForeignKey(to=Usuario, on_delete=models.CASCADE)
+
+
+class SolicitacaoCarona(models.Model):
+    passa_por = models.ForeignKey(to=Trajeto, blank=False, on_delete=models.CASCADE)
+    data_hora_chegada = models.DateTimeField(default=date.today, blank=False)
+    quantidade_passageiros = models.IntegerField(default=1)
+    em_aberto = models.BooleanField(default=True)

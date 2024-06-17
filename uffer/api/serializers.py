@@ -66,3 +66,7 @@ class PassageiroSerializer(serializers.ModelSerializer):
         model = Passageiro
         fields = '__all__'
 
+class SolicitacaoCaronaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SolicitacaoCarona
+        fields = ['data_hora_chegada', 'quantidade_passageiros', 'em_aberto', 'passa_por']
