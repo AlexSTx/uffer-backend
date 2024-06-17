@@ -82,7 +82,7 @@ class ParadasList(generics.ListCreateAPIView):
     serializer_class = ParadaSerializer
 
 
-class ParadaDetail(generics.RetrieveDestroyAPIView):
+class ParadaDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Parada.objects.all()
     serializer_class = ParadaSerializer
 
