@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import validate_email, validate_slug
-from datetime import date
+from datetime import datetime
 
 
 # Create your models here.
@@ -73,6 +73,6 @@ class Passageiro(models.Model):
 
 class SolicitacaoCarona(models.Model):
     passa_por = models.ForeignKey(to=Trajeto, blank=False, on_delete=models.CASCADE)
-    data_hora_chegada = models.DateTimeField(default=date.today, blank=False)
+    data_hora_chegada = models.DateTimeField(default=datetime.now, blank=False)
     quantidade_passageiros = models.IntegerField(default=1)
     em_aberto = models.BooleanField(default=True)
