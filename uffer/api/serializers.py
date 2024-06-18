@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from base.models import Usuario, Motorista, Veiculo, Local, Favorito, LocalPadrao, Trajeto, Parada, Carona, Passageiro, SolicitacaoCarona
-
+from django.contrib.auth.models import User
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
@@ -67,6 +67,13 @@ class PassageiroSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class SolicitacaoCaronaSerializer(serializers.ModelSerializer):
+    usuario = serializers.ReadOnlyField(source='usuario.username')
     class Meta:
         model = SolicitacaoCarona
-        fields = ['data_hora_chegada', 'quantidade_passageiros', 'em_aberto', 'passa_por']
+        fields = ['data_hora_chegada', 'quantidade_passageiros', 'em_aberto', 'passa_por', 'usuario']
+
+
+class UserSerializer (serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email']

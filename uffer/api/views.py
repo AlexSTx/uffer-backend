@@ -1,12 +1,13 @@
 from base.models import Usuario, Motorista, Veiculo, Local, Favorito, LocalPadrao, Trajeto, Parada, Carona, Passageiro, SolicitacaoCarona
-from .serializers import UsuarioSerializer, MotoristaSerializer, VeiculoSerializer, LocalSerializer, FavoritoSerializer, LocalPadraoSerializer, TrajetoSerializer, ParadaSerializer, ParadaStandaloneSerializer, CaronaSerializer, PassageiroSerializer, SolicitacaoCaronaSerializer
-
+from django.contrib.auth.models import User
+from .serializers import UsuarioSerializer, MotoristaSerializer, VeiculoSerializer, LocalSerializer, FavoritoSerializer, LocalPadraoSerializer, TrajetoSerializer, ParadaSerializer, ParadaStandaloneSerializer, CaronaSerializer, PassageiroSerializer, SolicitacaoCaronaSerializer, UserSerializer
+from .permissions import IsUsuarioOrReadOnly
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics, mixins, status
 from rest_framework.schemas import AutoSchema
-
+from rest_framework import permissions
 
 class UsuariosList(generics.ListCreateAPIView):
     queryset = Usuario.objects.all()
@@ -110,8 +111,23 @@ class PassageiroDetail(generics.RetrieveDestroyAPIView):
 class SolicitacoesCaronaList(generics.ListCreateAPIView):
     queryset = SolicitacaoCarona.objects.all()
     serializer_class = SolicitacaoCaronaSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
 
 
 class SolicitacaoCaronaDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = SolicitacaoCarona.objects.all()
     serializer_class = SolicitacaoCaronaSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsUsuarioOrReadOnly]
+
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

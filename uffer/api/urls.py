@@ -34,4 +34,7 @@ urlpatterns = [
 
     path('solicitacoes_carona/', views.SolicitacoesCaronaList.as_view()),
     path('solicitacoes_carona/<int:pk>/', views.SolicitacaoCaronaDetail.as_view()),
+
+    path('users/', views.UserList.as_view()),
+    path('users/<int:pk>/', views.UserDetail.as_view()),
 ]

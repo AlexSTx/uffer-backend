@@ -72,6 +72,7 @@ class Passageiro(models.Model):
 
 
 class SolicitacaoCarona(models.Model):
+    usuario = models.ForeignKey('auth.User', related_name="solicitacoes", on_delete=models.CASCADE)
     passa_por = models.ForeignKey(to=Trajeto, blank=False, on_delete=models.CASCADE)
     data_hora_chegada = models.DateTimeField(default=datetime.now, blank=False)
     quantidade_passageiros = models.IntegerField(default=1)
